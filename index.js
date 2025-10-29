@@ -1,12 +1,11 @@
 
-
-
 let taskList = [];
 let taskName;
 let taskStatus;
 let taskDueDate;
 let taskCategory;
 let addTaskButton = document.getElementById("addTaskButton");
+let editTaskButton = document.getElementById("editTaskButton");
 let categoryFilterButton = document.getElementById("categoryFilterButton");
 let statusFilterButton = document.getElementById("statusFilterButton");
 let nextId = 1; // Initialize a counter outside the function/loop where objects are created
@@ -14,20 +13,28 @@ const today = new Date();
 const day = today.getDate();
 const month = today.getMonth() + 1; // getMonth() is 0-indexed
 const year = today.getFullYear();
-const todayformattedDate = `${month}/${day}/${year}`; 
+const todayformattedDate = `${month}-${day}-${year}`; 
 
+//define functions
 
+//create Function
 function addTask(task){
-    console.log(task);
-    if(task.taskName.trim() === ""){
+    if(task.taskName.trim() === "" || !task.taskName){
         alert("Cannot add an empty item to Task Managament App!");   
         clearInputFeilds();
         return;
-    }if(taskList.includes(task.taskName.toLowerCase() ||task.taskName.toUpperCase() || task.taskName )){
+    } if (taskList.includes(task.taskName.toLowerCase()) || taskList.includes(task.taskName.toUpperCase()) || taskList.includes(task.taskName)){
         alert(`${task.taskName} is already on the list`);
         clearInputFeilds();
-    } else if(!task.taskDueDate && !task.taskStatus){
+        return;
+    }else if(!task.taskDueDate){
         task.taskDueDate =  todayformattedDate;
+        if(task.taskDueDate < todayformattedDate ){
+        task.taskStatus = "Over Due";
+        taskList.push(task);  
+        renderTasks();
+        clearInputFeilds();
+        }
         task.taskStatus = "Over Due";
         taskList.push(task);  
         renderTasks();
@@ -37,9 +44,8 @@ function addTask(task){
       taskList.push(task);  
       renderTasks();
       clearInputFeilds();
-
     }else if(!task.taskStatus){
-        task.taskStatus = "In Progress";
+        task.taskStatus = "Over Due";
         taskList.push(task);
         renderTasks();
         clearInputFeilds();
@@ -54,6 +60,25 @@ function addTask(task){
                
 };
 
+
+// Edit task Function 
+
+function editTask(){
+   let userInput = prompt("Which task would you like to Edit: (Use ID)");
+     taskToEdit = taskList.find((task) => task.id == userInput);
+        if(!taskToEdit){
+            alert("There are No Task that match that Description. Please try editing again.")
+        }else{
+           let changeNameInput = prompt("what would you like the new name of task to be:");
+          taskToEdit.taskName = changeNameInput;
+          let  changeStatusInput = prompt("what would you like the new status to be: In Progress,Over Due,Completed");
+          taskToEdit.taskStatus = changeStatusInput;
+          renderTasks();
+        }
+     }
+
+
+//clear Form Function
 function clearInputFeilds(){
     document.getElementById("TaskNameInput").value = "";
     document.querySelector("input[name='status']:checked").value = "";
@@ -61,6 +86,7 @@ function clearInputFeilds(){
     document.getElementById("categoryDropdown").value = "";
 }
 
+//Table Rendering For List
 
 function renderTasks(){
     const taskTableBody = document.querySelector("tbody");
@@ -84,10 +110,11 @@ function renderTasks(){
        categoryCell.textContent = task.taskCategory;
        row.appendChild(categoryCell);
 
-
+     
        // Task DueDate Cell
        const dueDateCell = document.createElement("td");
        dueDateCell.textContent = task.taskDueDate;
+       task.taskDueDate = task.taskDueDate;
        row.appendChild(dueDateCell);
 
        // Task Status Cell
@@ -95,22 +122,10 @@ function renderTasks(){
        statusCell.textContent = task.taskStatus;
        row.appendChild(statusCell);
 
-    
-       
-
-//   Actions cell (e.g., Edit, Delete buttons)
-//     const actionsCell = document.createElement("td");
-
-//     Actions cell (e.g., Edit, Delete buttons)
-//     const editButton = document.createElement("button");
-//     editButton.textContent = "Edit";
-//     editButton.onclick = () => editTask(task.id); // Implement editTask function
-//     actionsCell.appendChild(editButton);
-
-
     taskTableBody.appendChild(row);
   });
 }
+
 //Local Storage Functions 
 function saveTask(taskList){
     localStorage.setItem('taskList',JSON.stringify(taskList));
@@ -127,30 +142,30 @@ document.addEventListener("DOMContentLoaded",() => {
        initalTasks = loadTasks();
 });
 
+
+//Filter Functions
 function filterTaskByStatus(inputValue){
    const filteredArrForStatus = taskList.filter(task => task.taskStatus.includes(inputValue));     
-   console.log(filteredArrForStatus);
    if(filteredArrForStatus.length === 0){
     alert("no Items match status filter");
    }else {
-     console.log(filteredArrForStatus);
      alert(`${filteredArrForStatus.length} task matched your status filter of ${inputValue}`);
-     renderTasks(filteredArrForStatus);
+     renderTasks();
    }
 };
 
 function filterTaskByCategory(inputValue){
     const filteredArrForCategory = taskList.filter(task => task.taskCategory.includes(inputValue));
-     console.log(filteredArrForCategory);
     if(filteredArrForCategory.length === 0){
      alert("no Items match category filter")
     }else {
-        console.log(filteredArrForCategory);
        alert(`${filteredArrForCategory.length} task matched your category filter of ${inputValue}`);
-      renderTasks(filteredArrForCategory);
+       renderTasks();
     }
 };
 
+
+//Event Listeners 
 addTaskButton.addEventListener("click",function(){
    let newTask = {id: nextId++  ,  // Assign the current value of nextId and then increment it
                  taskName: document.getElementById("TaskNameInput").value,
@@ -158,24 +173,20 @@ addTaskButton.addEventListener("click",function(){
                  taskDueDate: document.getElementById("dateInput").value,
                  taskCategory: document.getElementById("categoryDropdown").value,
    };
-   console.log("add task was clicked was clicked");
-    console.log(newTask);
     // taskList.push(newTask);
     addTask(newTask);
     renderTasks();
-    console.log(taskList)
 });
 
 categoryFilterButton.addEventListener("click",function(){
     let categoryFilterInput = document.getElementById("categorySelect").value;
-    console.log("category filter was clicked here is my input value" + categoryFilterInput)
-    filterTaskByCategory(categoryFilterInput)
-   
+    filterTaskByCategory(categoryFilterInput)  
 });
 
 statusFilterButton.addEventListener("click", function(){
 let  statusFilterInput = document.getElementById("statusSelect").value;
-  console.log("status filter was clicked here is my input value" + statusFilterInput)
       filterTaskByStatus(statusFilterInput)
-
+});
+editTaskButton.addEventListener("click",function(){
+    editTask();
 });

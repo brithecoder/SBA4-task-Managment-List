@@ -9,7 +9,7 @@
 </head>
  <body id="body">
 <container class="appContainer">
-    <h1>Task Managment App</h1>
+    <h1 id="h1">Task Managment App</h1>
        <content>
         <div>
             <div id="taskList">
@@ -55,8 +55,9 @@
                 <input type="radio" id="overDue" name="status" value="Over Due">
                 <label for="overDue">Over Due</label><br>
             </div>
-                <button id="addTaskButton" type="button">Add Task</button>
-                <!-- <button id="removeItemButton"type="reset">Remove Last Item</button> -->
+                <button id="addTaskButton" type="button" class="btn btn-dark">Add Task</button>
+                <br>
+                <button id="editTaskButton"type="button" class="btn btn-dark">Edit Item</button>
               </Form>
               <form id="categoryFilterForm">
                 <select id="categorySelect">
@@ -65,8 +66,9 @@
                     <option value="Personal">Personal</option>
                     <option value="HouseHold">House Hold</option>
                 </select>
-                <button type="button" id="categoryFilterButton">Category Filter</button>
+                <button type="button" id="categoryFilterButton" class="btn btn-dark">Category Filter</button>
             </form>
+            <br>
             <form id="StatusFilterForm">
                 <select id="statusSelect">
                     <option value="">All Options</option>
@@ -74,7 +76,7 @@
                     <option value="Over Due">Over Due</option>
                     <option value="Completed">Completed</option>
                 </select>
-                <button type="button" id="statusFilterButton">Status Filter</button>
+                <button type="button" id="statusFilterButton" class="btn btn-dark">Status Filter</button>
             </form>
          </div>
        </content>
