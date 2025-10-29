@@ -16,7 +16,7 @@
              <table class="table">
                 <thead>
                   <tr>
-                    <!-- <th scope="col">#</th> -->
+                    <th scope="col">#</th>
                     <th scope="col">Task Name</th>
                     <th scope="col">Category</th>
                     <th scope="col">Deadline Date</th>
@@ -25,7 +25,7 @@
                 </thead>
                 <tbody id="tableContent">
                   <tr>
-                    <!-- <th scope="row">1</th> -->
+                    <th scope="row">1</th>
                     <td id="taskNameTD">Example Task</td>
                     <td id="taskCategoryTD">work </td>
                     <td id="taskDdTd">11/23/25</td>
@@ -37,12 +37,13 @@
         </div>
          <div class="taskFormContainer">
               <Form class="addTaskForm">
+                <label for="TaskNameInput">Add Task Here:</label>
                 <input id="TaskNameInput"type="text" name="TaskName" placeholder="Add new Task" required/>
                 <label for="categoryDropdown">Choose a Category:</label>
                 <select id="categoryDropdown" name="selectedOption">
                     <option value="Work">Work</option>
                     <option value="Personal">Personal</option>
-                    <option value="House Hold">Household</option>
+                    <option value="HouseHold">Household</option>
                 </select>
                 <label for="CategoryInput">When is the deadline?</label>
                 <input id="dateInput" type="date"name="Deadline" required />
@@ -50,13 +51,31 @@
                 <input type="radio" id="inProgress" name="status" value="In Progress">
                 <label for="inProgress">In Progress</label><br>
                 <input type="radio" id="completed" name="status" value="Completed">
-                <label for="completed">completed</label><br>
+                <label for="completed">Completed</label><br>
                 <input type="radio" id="overDue" name="status" value="Over Due">
                 <label for="overDue">Over Due</label><br>
             </div>
                 <button id="addTaskButton" type="button">Add Task</button>
                 <!-- <button id="removeItemButton"type="reset">Remove Last Item</button> -->
               </Form>
+              <form id="categoryFilterForm">
+                <select id="categorySelect">
+                    <option value="">All Options</option>
+                    <option value="Work">Work</option>
+                    <option value="Personal">Personal</option>
+                    <option value="HouseHold">House Hold</option>
+                </select>
+                <button type="button" id="categoryFilterButton">Category Filter</button>
+            </form>
+            <form id="StatusFilterForm">
+                <select id="statusSelect">
+                    <option value="">All Options</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Over Due">Over Due</option>
+                    <option value="Completed">Completed</option>
+                </select>
+                <button type="button" id="statusFilterButton">Status Filter</button>
+            </form>
          </div>
        </content>
     </container>
