@@ -1,0 +1,16 @@
+#body{
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: grey;
+    align-items: center;
+
+}
+.addTaskForm{
+    display: inline-flex;
+    flex-direction: column; 
+   padding-top: 40px;
+   display: flex;
+   justify-content: center; 
+    align-items: center
+}

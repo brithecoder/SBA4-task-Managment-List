@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Task Managment App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+ <body id="body">
+<container class="appContainer">
+    <h1>Task Managment App</h1>
+       <content>
+        <div>
+            <div id="taskList">
+             <table class="table">
+                <thead>
+                  <tr>
+                    <!-- <th scope="col">#</th> -->
+                    <th scope="col">Task Name</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Deadline Date</th>
+                    <th scope="col"> Status </th>
+                  </tr>
+                </thead>
+                <tbody id="tableContent">
+                  <tr>
+                    <!-- <th scope="row">1</th> -->
+                    <td id="taskNameTD">Example Task</td>
+                    <td id="taskCategoryTD">work </td>
+                    <td id="taskDdTd">11/23/25</td>
+                    <td Id="taskStatusTd">In Progress</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+         <div class="taskFormContainer">
+              <Form class="addTaskForm">
+                <input id="TaskNameInput"type="text" name="TaskName" placeholder="Add new Task" required/>
+                <label for="categoryDropdown">Choose a Category:</label>
+                <select id="categoryDropdown" name="selectedOption">
+                    <option value="Work">Work</option>
+                    <option value="Personal">Personal</option>
+                    <option value="House Hold">Household</option>
+                </select>
+                <label for="CategoryInput">When is the deadline?</label>
+                <input id="dateInput" type="date"name="Deadline" required />
+                <div class ="radioButtons">
+                <input type="radio" id="inProgress" name="status" value="In Progress">
+                <label for="inProgress">In Progress</label><br>
+                <input type="radio" id="completed" name="status" value="Completed">
+                <label for="completed">completed</label><br>
+                <input type="radio" id="overDue" name="status" value="Over Due">
+                <label for="overDue">Over Due</label><br>
+            </div>
+                <button id="addTaskButton" type="button">Add Task</button>
+                <!-- <button id="removeItemButton"type="reset">Remove Last Item</button> -->
+              </Form>
+         </div>
+       </content>
+    </container>
+    <script src="index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>
