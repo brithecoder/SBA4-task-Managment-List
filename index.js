@@ -8,6 +8,7 @@ let addTaskButton = document.getElementById("addTaskButton");
 let editTaskButton = document.getElementById("editTaskButton");
 let categoryFilterButton = document.getElementById("categoryFilterButton");
 let statusFilterButton = document.getElementById("statusFilterButton");
+const taskTableBody = document.querySelector("tbody");
 let nextId = 1; // Initialize a counter outside the function/loop where objects are created
 const today = new Date();
 const day = today.getDate();
@@ -23,19 +24,10 @@ function addTask(task){
         alert("Cannot add an empty item to Task Managament App!");   
         clearInputFeilds();
         return;
-    } if (taskList.includes(task.taskName.toLowerCase()) || taskList.includes(task.taskName.toUpperCase()) || taskList.includes(task.taskName)){
-        alert(`${task.taskName} is already on the list`);
-        clearInputFeilds();
-        return;
     }else if(!task.taskDueDate){
         task.taskDueDate =  todayformattedDate;
-        if(task.taskDueDate < todayformattedDate ){
         task.taskStatus = "Over Due";
-        taskList.push(task);  
-        renderTasks();
-        clearInputFeilds();
-        }
-        task.taskStatus = "Over Due";
+        task.taskStatus.color = 'red';
         taskList.push(task);  
         renderTasks();
         clearInputFeilds();
@@ -44,13 +36,12 @@ function addTask(task){
       taskList.push(task);  
       renderTasks();
       clearInputFeilds();
-    }else if(!task.taskStatus){
-        task.taskStatus = "Over Due";
+    } if(task.taskDueDate && !task.taskStatus){
+        task.taskStatus = "In Progress";
         taskList.push(task);
         renderTasks();
         clearInputFeilds();
-    }
-    else {
+    } else {
         taskList.push(task);  
         renderTasks();
         alert(`${task.taskName} has been added to the list.`);
@@ -59,9 +50,6 @@ function addTask(task){
  }
                
 };
-
-
-// Edit task Function 
 
 function editTask(){
    let userInput = prompt("Which task would you like to Edit: (Use ID)");
@@ -77,7 +65,6 @@ function editTask(){
         }
      }
 
-
 //clear Form Function
 function clearInputFeilds(){
     document.getElementById("TaskNameInput").value = "";
@@ -89,7 +76,6 @@ function clearInputFeilds(){
 //Table Rendering For List
 
 function renderTasks(){
-    const taskTableBody = document.querySelector("tbody");
     taskTableBody.innerHTML =""; //clear existing rows
     taskList.forEach(task => {
     const row = document.createElement('tr');
@@ -139,7 +125,9 @@ function loadTasks() {
 }
 // // Call renderTasks to display tasks when the page loads
 document.addEventListener("DOMContentLoaded",() => {
-       initalTasks = loadTasks();
+        console.log(taskList);
+    //    initalTasks = renderTasks();
+    //Array Is empty and still not rendering on refresh 
 });
 
 
@@ -160,6 +148,7 @@ function filterTaskByCategory(inputValue){
      alert("no Items match category filter")
     }else {
        alert(`${filteredArrForCategory.length} task matched your category filter of ${inputValue}`);
+     
        renderTasks();
     }
 };
