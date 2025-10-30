@@ -8,13 +8,13 @@ let addTaskButton = document.getElementById("addTaskButton");
 let editTaskButton = document.getElementById("editTaskButton");
 let categoryFilterButton = document.getElementById("categoryFilterButton");
 let statusFilterButton = document.getElementById("statusFilterButton");
-const taskTableBody = document.querySelector("tbody");
 let nextId = 1; // Initialize a counter outside the function/loop where objects are created
 const today = new Date();
 const day = today.getDate();
 const month = today.getMonth() + 1; // getMonth() is 0-indexed
 const year = today.getFullYear();
 const todayformattedDate = `${month}-${day}-${year}`; 
+const taskTableBody = document.querySelector("tbody");
 
 //define functions
 
@@ -148,7 +148,6 @@ function filterTaskByCategory(inputValue){
      alert("no Items match category filter")
     }else {
        alert(`${filteredArrForCategory.length} task matched your category filter of ${inputValue}`);
-     
        renderTasks();
     }
 };
@@ -156,7 +155,7 @@ function filterTaskByCategory(inputValue){
 
 //Event Listeners 
 addTaskButton.addEventListener("click",function(){
-   let newTask = {id: nextId++  ,  // Assign the current value of nextId and then increment it
+   let newTask = {id: nextId++,  // Assign the current value of nextId and then increment it
                  taskName: document.getElementById("TaskNameInput").value,
                  taskStatus: document.querySelector("input[name='status']:checked").value,
                  taskDueDate: document.getElementById("dateInput").value,
